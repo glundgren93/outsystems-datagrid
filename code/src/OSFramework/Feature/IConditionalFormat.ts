@@ -12,6 +12,6 @@ namespace OSFramework.Feature {
         /**
          * Removes rules of desired binding.
          */
-        removeRules(binding: string);
+        removeRules(binding: string): void;
     }
 }

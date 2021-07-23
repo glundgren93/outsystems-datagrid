@@ -20,7 +20,7 @@ namespace OSFramework.Grid {
         validatingAction: Event.Grid.ValidatingAction;
         widgetId: string;
 
-        addColumn(col: Column.IColumn);
+        addColumn(col: Column.IColumn): void;
         changeColumnProperty(
             columnID: string,
             propertyName: string,
@@ -52,8 +52,8 @@ namespace OSFramework.Grid {
          */
         hasColumnsDefined(): boolean;
         hasResults(): boolean;
-        removeColumn(columnID: string);
-        setCellError(binding: string, row: number, message: string);
+        removeColumn(columnID: string): void;
+        setCellError(binding: string, row: number, message: string): void;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setData(data: any): boolean;
     }

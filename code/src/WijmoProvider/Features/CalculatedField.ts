@@ -82,7 +82,7 @@ namespace WijmoProvider.Feature {
             this._calculatedFields[binding] = Evaluate(formula);
         }
 
-        public removeFormula(binding: string) {
+        public removeFormula(binding: string): void {
             if (this._calculatedFields.hasOwnProperty(binding))
                 delete this._calculatedFields[binding];
         }

@@ -11,17 +11,6 @@ namespace WijmoProvider.Grid {
                 .itemsSource as wijmo.collections.CollectionView;
         }
 
-        private _getRowMetadataInRow(row: any): Map<string, any> {
-            if (!this._hasMetadataByRow(row))
-                row[this._extraData] = new Map<
-                    string,
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    any
-                >();
-
-            return row[this._extraData];
-        }
-
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         private _getRowMetadataByRowNumber(row: number): Map<string, any> {
             if (!this._hasMetadataByRowNumber(row))
@@ -32,6 +21,17 @@ namespace WijmoProvider.Grid {
                 >();
 
             return this._grid.rows[row].dataItem[this._extraData];
+        }
+
+        private _getRowMetadataInRow(row: any): Map<string, any> {
+            if (!this._hasMetadataByRow(row))
+                row[this._extraData] = new Map<
+                    string,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    any
+                >();
+
+            return row[this._extraData];
         }
 
         private _hasMetadataByRow(row: any): boolean {
@@ -90,15 +90,15 @@ namespace WijmoProvider.Grid {
                 this._getRowMetadataByRowNumber(rowNumber).delete(propertyName);
         }
 
-        public getMetadataInRow(row: any, propertyName: string): any {
-            return this._getRowMetadataInRow(row).get(propertyName);
-        }
-
         public getMetadataByRowNumber(
             rowNumber: number,
             propertyName: string
         ): any {
             return this._getRowMetadataByRowNumber(rowNumber).get(propertyName);
+        }
+
+        public getMetadataInRow(row: any, propertyName: string): any {
+            return this._getRowMetadataInRow(row).get(propertyName);
         }
 
         public hasOwnPropertyByRow(row: any, property: string): boolean {

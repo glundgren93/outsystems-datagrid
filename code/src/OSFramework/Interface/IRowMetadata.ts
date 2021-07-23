@@ -34,19 +34,19 @@ namespace OSFramework.Interface {
          */
         clearPropertyByRowNumber(row: number, propertyName: string): void;
         /**
-         * Responsible for retrieving metadata information for a given row and property
-         * @param row Index row reference, works only in the current page
-         * @param propertyName Metadata property
-         */
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        getMetadataInRow(row: any, propertyName: string): any;
-        /**
          * Responsible for retrieving metadata information for a given row number and property
          * @param rowNumber Index row reference, works only in the current page
          * @param propertyName Metadata property
          */
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getMetadataByRowNumber(rowNumber: number, propertyName: string): any;
+        /**
+         * Responsible for retrieving metadata information for a given row and property
+         * @param row Index row reference, works only in the current page
+         * @param propertyName Metadata property
+         */
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        getMetadataInRow(row: any, propertyName: string): any;
         /**
          * Verify the presence of metadata information for a given row and property
          * @param {*} row
