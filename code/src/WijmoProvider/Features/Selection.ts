@@ -12,6 +12,8 @@ namespace WijmoProvider.Feature {
     {
         private _grid: Grid.IGridWijmo;
         private _hasSelectors: boolean;
+        private readonly _internalLabel = '__checkedPages';
+        private _metadata: OSFramework.Interface.IRowMetadata;
         private _selectionMode: wijmo.grid.SelectionMode;
 
         /**
@@ -29,6 +31,7 @@ namespace WijmoProvider.Feature {
 
             this._selectionMode = selectionMode;
             this._hasSelectors = hasSelectors;
+            this._metadata = this._grid.rowMetadata;
         }
 
         public get hasSelectors(): boolean {
@@ -94,6 +97,35 @@ namespace WijmoProvider.Feature {
             );
             this._grid.provider.copying.addHandler(
                 this.equalizeSelection.bind(this)
+            );
+
+            this._grid.provider.selectionChanged.addHandler((x, e) => {
+                if (e.row > 0) {
+                    const isSelected = x.rows[e.row]?.isSelected;
+
+                    this.getMetadata(e.row).isChecked = isSelected;
+                }
+            });
+
+            this._grid.provider.updatingView.addHandler((grid, e) => {
+                grid.rows.forEach((row, index) => {
+                    row.isSelected = this.getMetadata(row.index).isChecked;
+                });
+            });
+
+            this._grid.provider.addEventListener(
+                this._grid.provider.hostElement,
+                'click',
+                (e) => {
+                    const ht = this._grid.provider.hitTest(e);
+                    if (ht.panel.cellType === 3 && ht.col === 0) {
+                        this._grid.provider.selectionMode =
+                            wijmo.grid.SelectionMode.None;
+                    } else {
+                        this._grid.provider.selectionMode =
+                            wijmo.grid.SelectionMode.MultiRange;
+                    }
+                }
             );
         }
 
@@ -265,6 +297,22 @@ namespace WijmoProvider.Feature {
             return rowColumnArr;
         }
 
+        public getMetadata(
+            rowNumber: number
+        ): OSFramework.Feature.Auxiliar.CheckedPages {
+            if (!this.hasMetadata(rowNumber)) {
+                this._metadata.setMetadataByRowNumber(
+                    rowNumber,
+                    this._internalLabel,
+                    new OSFramework.Feature.Auxiliar.CheckedPages()
+                );
+            }
+            return this._metadata.getMetadataByRowNumber(
+                rowNumber,
+                this._internalLabel
+            ) as OSFramework.Feature.Auxiliar.CheckedPages;
+        }
+
         public getProviderAllSelections(): wijmo.grid.CellRange[] {
             const ranges: wijmo.grid.CellRange[] = [];
             const maxCol = this._grid.provider.columns.length - 1;
@@ -332,6 +380,13 @@ namespace WijmoProvider.Feature {
                         rowIndex,
                         this._grid.provider.rows[rowIndex].dataItem
                     )
+            );
+        }
+
+        public hasMetadata(rowNumber: number): boolean {
+            return this._metadata.hasOwnPropertyByRowNumber(
+                rowNumber,
+                this._internalLabel
             );
         }
 
