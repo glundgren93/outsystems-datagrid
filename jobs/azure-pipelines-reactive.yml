@@ -70,27 +70,7 @@ stages:
           vmImage: 'windows-latest'
     steps:
     #Checkout repositories
-    - checkout: self 
     - checkout: outsystems-datagrid-reactive-tests 
-    - task: PowerShell@2
-      displayName: 'Format branch name'
-      inputs:
-        filePath: './outsystems-datagrid-reactive/jobs/branch.ps1'
-        workingDirectory: ./outsystems-datagrid-reactive/
-        arguments: -branch $(SourceBranchName)
-    
-    #Sets skip variable as true if sample doesnt exist.
-    - bash: |
-        status=$(curl -s --head -w %{http_code} $(ENV_URL)/$(branch)/ -o /dev/null)
-        echo $status
-        echo $(ENV_URL)/$(branch)/
-        if [[ $status = 404 ]]
-        then
-          echo "##vso[task.setvariable variable=skip;]true"
-          echo $(skip)
-        fi
-      displayName: "Ping sample test page"
-
     - template: 'azure/azure-pipelines-template.yml@outsystems-datagrid-reactive-tests'
       parameters:
         grid: reactive

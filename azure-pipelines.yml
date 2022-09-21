@@ -154,3 +154,4 @@ stages:
     parameters:
       currentBranch: $(CurrentBranchName)
       sourceBranch: $(SourceBranchName)
+      module: $(moduleName)
