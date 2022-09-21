@@ -47,7 +47,7 @@ parameters:
   displayName: Max driver instances
   type: number
   default: 2
-
+  
 stages: 
 - stage: Tests
   #Only run tests if not in dev branch
@@ -61,15 +61,13 @@ stages:
           vmImage: 'windows-latest'
     steps:
     #Checkout repositories
-    - checkout: self
     - checkout: outsystems-datagrid-reactive-tests 
-
-    - template: 'azure-pipelines-template.yml'
+    - template: 'azure/azure-pipelines-template.yml@outsystems-datagrid-reactive-tests'
       parameters:
         grid: reactive
         module: ${{ parameters.module }}
         browser: ${{ parameters.browser }}
         environment: ${{ parameters.environment }}
-        feature: ${{ parameters.feature }}
+        tags: ${{ parameters.feature }}
         priority: ${{ parameters.priority }}
         instances: ${{ parameters.instances }}
