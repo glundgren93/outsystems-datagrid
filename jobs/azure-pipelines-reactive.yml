@@ -70,6 +70,7 @@ stages:
           vmImage: 'windows-latest'
     steps:
     #Checkout repositories
+    - checkout: self 
     - checkout: outsystems-datagrid-reactive-tests 
     - task: PowerShell@2
       displayName: 'Format branch name'
