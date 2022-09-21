@@ -62,7 +62,7 @@ stages:
     steps:
     #Checkout repositories
     - checkout: outsystems-datagrid-reactive-tests 
-    - template: 'azure/azure-pipelines-template.yml@outsystems-datagrid-reactive-tests'
+    - template: 'azure/azure-pipelines-reactive.yml@outsystems-datagrid-reactive-tests'
       parameters:
         grid: reactive
         module: ${{ parameters.module }}
