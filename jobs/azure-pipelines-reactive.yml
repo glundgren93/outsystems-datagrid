@@ -94,7 +94,7 @@ stages:
       condition: ne(variables['skip'], 'true')
       parameters:
         grid: reactive
-        module: ${{ parameters.module }}
+        module: ${{ parameters.module }}_$(branch)
         browser: ${{ parameters.browser }}
         environment: ${{ parameters.environment }}
         tags: ${{ parameters.feature }}
