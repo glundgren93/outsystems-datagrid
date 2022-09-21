@@ -91,7 +91,6 @@ stages:
       displayName: "Ping sample test page"
 
     - template: 'azure/azure-pipelines-template.yml@outsystems-datagrid-reactive-tests'
-      condition: ne(variables['skip'], 'true')
       parameters:
         grid: reactive
         module: ${{ parameters.module }}_$(branch)
