@@ -219,7 +219,7 @@ namespace OSFramework.DataGrid.Grid {
             Object.keys(object).forEach((key) => {
                 if (_.isObject(object[key]) && Object.keys(object[key]).length)
                     this._converter(object[key]);
-                else object[key] = undefined;
+                else object[key] = null;
             });
         }
 
